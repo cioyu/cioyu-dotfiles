@@ -22,7 +22,7 @@ config_step() {
 
 
 if ! pacman -Q gum &> /dev/null; then
-    sudo pacman -S --noconfirm "$pkg" 
+    sudo pacman -S --noconfirm gum 
 else
     gum style --foreground 82 "gum already installed"
 fi
