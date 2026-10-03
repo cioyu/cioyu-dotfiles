@@ -1,0 +1,19 @@
+# 外观基础参数
+background-color=#1e1e2ee6
+text-color=#f5f5f7
+border-color=#ffffff1a
+border-size=1
+border-radius=16
+padding=16
+margin=12
+width=360
+
+# 字体与图标
+font=霞鹜文楷 10
+icons=1
+max-icon-size=48
+icon-location=left
+
+# 行为控制
+default-timeout=5000
+max-visible=3

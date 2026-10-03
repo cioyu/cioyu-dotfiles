@@ -1,0 +1,274 @@
+* {
+    font-family: "霞鹜文楷等宽", "FreeMono", "Adwaita Mono", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* 顶栏整体：毛玻璃 + 无边框 + 圆角 */
+window#waybar {
+    background-color: rgba(30, 30, 30, 0.55);
+    border: none;
+    border-radius: 0 0 12px 12px;
+    color: #ffffff;
+    transition-property: background-color;
+    transition-duration: .3s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/* 所有按钮通用 */
+button {
+    box-shadow: none;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+}
+
+/* 工作区按钮 */
+#workspaces {
+    margin: 0 6px;
+}
+
+#workspaces button {
+    padding: 0 6px;
+    margin: 0 2px;
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+#workspaces button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+    background-color: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    box-shadow: none;
+}
+
+#workspaces button.urgent {
+    background-color: rgba(235, 77, 75, 0.8);
+    color: #ffffff;
+}
+
+/* 所有右侧模块：去掉彩色背景，统一透明 */
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#mpd {
+    padding: 0 10px;
+    margin: 0 2px;
+    background-color: transparent;
+    color: #ffffff;
+}
+
+/* 窗口标题 */
+#window {
+    margin: 0 6px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* 时钟 */
+#clock {
+    background-color: transparent;
+    font-weight: 600;
+}
+
+/* 电池 */
+#battery {
+    background-color: transparent;
+    color: #ffffff;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: #26A65B;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background-color: rgba(245, 60, 60, 0.8);
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    border-radius: 6px;
+}
+
+/* 电源配置 */
+#power-profiles-daemon {
+    padding-right: 12px;
+}
+
+#power-profiles-daemon.performance {
+    color: #f53c3c;
+}
+
+#power-profiles-daemon.balanced {
+    color: #2980b9;
+}
+
+#power-profiles-daemon.power-saver {
+    color: #2ecc71;
+}
+
+/* CPU / 内存等：只保留文字颜色区分，去掉色块 */
+#cpu {
+    color: #2ecc71;
+}
+
+#memory {
+    color: #9b59b6;
+}
+
+#disk {
+    color: #e67e22;
+}
+
+#backlight {
+    color: #90b1b1;
+}
+
+#network {
+    color: #3498db;
+}
+
+#network.disconnected {
+    color: #f53c3c;
+}
+
+#pulseaudio {
+    color: #f1c40f;
+}
+
+#pulseaudio.muted {
+    color: #90b1b1;
+}
+
+#wireplumber {
+    color: #fff0f5;
+}
+
+#wireplumber.muted {
+    color: #f53c3c;
+}
+
+#custom-media {
+    color: #66cc99;
+    min-width: 100px;
+}
+
+#temperature {
+    color: #f0932b;
+}
+
+#temperature.critical {
+    color: #eb4d4b;
+}
+
+#tray {
+    background-color: transparent;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+#idle_inhibitor {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#idle_inhibitor.activated {
+    color: #2ecc71;
+}
+
+#mpd {
+    color: #66cc99;
+}
+
+#mpd.disconnected {
+    color: #f53c3c;
+}
+
+#mpd.stopped {
+    color: #90b1b1;
+}
+
+#mpd.paused {
+    color: #51a37a;
+}
+
+#language {
+    color: #00b093;
+    padding: 0 5px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#keyboard-state {
+    color: #97e1ad;
+    padding: 0 5px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#scratchpad {
+    background: transparent;
+}
+
+#scratchpad.empty {
+    background-color: transparent;
+}
+
+#privacy {
+    padding: 0;
+}
+
+#privacy-item {
+    padding: 0 5px;
+    color: white;
+    border-radius: 4px;
+}
+
+#privacy-item.screenshare {
+    background-color: rgba(207, 87, 0, 0.8);
+}
+
+#privacy-item.audio-in {
+    background-color: rgba(28, 160, 0, 0.8);
+}
+
+#privacy-item.audio-out {
+    background-color: rgba(0, 105, 212, 0.8);
+}

@@ -1,0 +1,97 @@
+#!/bin/bash
+
+install_pkg() {
+    local pkg="$1"
+    CURRENT=$((CURRENT + 1))
+
+    if ! pacman -Q "$pkg" &> /dev/null; then
+        sudo pacman -S --noconfirm "$pkg" 
+    else
+        gum style --foreground 82 "[$CURRENT/$TOTAL] $pkg already installed"
+    fi
+}
+
+CONFIG_TOTAL=10
+CONFIG_CURRENT=0
+
+config_step() {
+    local desc="$1"
+    CONFIG_CURRENT=$((CONFIG_CURRENT + 1))
+    gum style --foreground 212 "[$CONFIG_CURRENT/$CONFIG_TOTAL] configure $desc"
+}
+
+
+if ! pacman -Q gum &> /dev/null; then
+    sudo pacman -S --noconfirm "$pkg" 
+else
+    gum style --foreground 82 "gum already installed"
+fi
+gum style --foreground 212 "Configuring archlinuxcn repository..."
+if ! grep -q "^\[archlinuxcn\]" /etc/pacman.conf; then
+    sudo tee -a /etc/pacman.conf > /dev/null <<EOF
+
+[archlinuxcn]
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/\$arch
+EOF
+
+    sudo pacman -Sy --noconfirm
+fi
+
+PACKAGES=( archlinuxcn-keyring lsd bat blueman kitty wf-recorder brightnessctl power-profiles-daemon pipewire
+    libappindicator awww mpv flclash ttf-lxgw-wenkai ttf-lxgw-wenkai-mono fcitx5 fcitx5-chinese-addons
+    fcitx5-configtool fcitx5-qt ttf-jetbrains-mono-nerd
+)
+TOTAL=${#PACKAGES[@]}
+CURRENT=0
+for pkg in "${PACKAGES[@]}"; do
+    install_pkg $pkg
+done
+
+config_step ".bashrc"
+cp .bashrc ~/.bashrc
+
+config_step "niri"
+mkdir -p ~/.config/niri
+cp ./niri/config.kdl ~/.config/niri/config.kdl
+
+config_step "kitty"
+mkdir -p ~/.config/kitty
+cp ./kitty/kitty.conf ~/.config/kitty/kitty.conf
+
+config_step "mako"
+mkdir -p ~/.config/mako
+cp ./mako/config ~/.config/mako/config
+makoctl reload
+
+config_step "waybar"
+cp -r ./waybar/ ~/.config/
+chmod +x ~/.config/waybar/record.sh
+cp ./waybar/power_menu.xml ~/.config/waybar/power_menu.xml
+
+
+config_step "locale"
+if ! locale -a | grep -q "zh_CN.utf8"; then
+    sudo sed -i 's/^#zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen
+    sudo locale-gen
+fi
+
+if ! grep -q "^LANG=zh_CN.UTF-8$" /etc/locale.conf 2>/dev/null; then
+    sudo tee /etc/locale.conf > /dev/null <<EOF
+LANG=zh_CN.UTF-8
+EOF
+fi
+
+config_step "fastfetch"
+cp -r ./fastfetch/ ~/.config/fastfetch
+
+config_step "shell"
+cp -r ./shell/ ~/Projects/
+
+config_step "cursor"
+cp -r ./cursor/ASUS/ ~/.local/share/icons
+
+config_step "environment"
+mkdir -p ~/.config/environment.d
+cp -r ./environment.d/ ~/.config/
+
+gum style --foreground 82 "Setup complete"
