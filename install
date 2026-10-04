@@ -39,7 +39,7 @@ fi
 
 PACKAGES=( archlinuxcn-keyring lsd bat blueman kitty wf-recorder brightnessctl power-profiles-daemon pipewire
     libappindicator awww mpv flclash ttf-lxgw-wenkai ttf-lxgw-wenkai-mono fcitx5 fcitx5-chinese-addons
-    fcitx5-configtool fcitx5-qt ttf-jetbrains-mono-nerd
+    fcitx5-configtool fcitx5-qt ttf-jetbrains-mono-nerd fastfetch
 )
 TOTAL=${#PACKAGES[@]}
 CURRENT=0
